@@ -12,16 +12,10 @@ sui_json_rpc_types = { git = "https://github.com/mystenlabs/sui", package = "sui
 tokio = { version = "1.2", features = ["full"] }
 anyhow = "1.0"
 serde = { version = "1.0.204", features = ["derive"] }
-base64 = "0.22.1"
-bincode = "1.3.3"
-log = "0.4.22"
-sp1-sdk = "3.0.0"
 serde_json = "1.0.128"
 reqwest = "0.12.8"
 tracing = "0.1.40"
 futures = "0.3.31"
-hex = "0.4"
-sui_types = "0.0.1"
-clap = { version = "4.4", features = ["derive"] }
 bcs = "0.1.6"
-sp1-sui = { path = "../../verifier" }
+sp1-sdk = { workspace = true }
+sp1-sui = { workspace = true }

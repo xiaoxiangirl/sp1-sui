@@ -1,0 +1,11 @@
+[workspace]
+members = ["verifier", "example/sp1_sui_sdk"]
+resolver = "2"
+
+[workspace.dependencies]
+
+# workspace
+sp1-sui = { path = "verifier" }
+
+# sp1
+sp1-sdk = { version = "3.0.0" }

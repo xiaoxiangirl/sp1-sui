@@ -2,6 +2,13 @@
 name = "sp1-sui"
 version = "0.1.0"
 edition = "2024"
+authors = ["Alexandre Roque, Mahdi Sedaghat"]
+description = "Verifier for SP1 Groth16 proofs on Sui"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/SoundnessLabs/sp1-sui"
+readme = "../README.md"
+keywords = ["cryptography", "zero-knowledge", "groth16", "verifier"]
+categories = ["cryptography"]
 
 [dependencies]
 ark-bn254 = "0.5.0"
@@ -14,9 +21,9 @@ clap = "4.5.26"
 hex = "0.4.3"
 num-bigint = "0.4.6"
 num-traits = "0.2.19"
-sp1-sdk = "3.0.0"
-sp1-verifier = { version = "3.0.0", default-features = false }
+sp1-verifier = "3.0.0"
 thiserror = "2.0.11"
+sp1-sdk = { workspace = false }
 
 [dev-dependencies]
 hex-literal = "0.3.1"

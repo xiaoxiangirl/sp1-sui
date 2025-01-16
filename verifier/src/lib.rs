@@ -23,7 +23,7 @@ use crate::ark_converter::{
 
 pub fn convert_sp1_gnark_to_ark(
     sp1_proof_with_public_values: SP1ProofWithPublicValues,
-) -> (String, String, String) {
+) -> (Vec<u8>, Vec<u8>, Vec<u8>) {
     let proof_bytes = sp1_proof_with_public_values.bytes();
 
     let proof = sp1_proof_with_public_values
@@ -84,13 +84,9 @@ pub fn convert_sp1_gnark_to_ark(
         .serialize_compressed(&mut ark_groth16_serialized)
         .unwrap();
 
-    let ark_groth16_serialized_hex: String = hex::encode(ark_groth16_serialized);
-    let ark_public_inputs_serialized_hex: String = hex::encode(ark_public_inputs_serialized);
-    let ark_proof_serialized_hex: String = hex::encode(ark_proof_serialized);
-
     (
-        ark_groth16_serialized_hex,
-        ark_public_inputs_serialized_hex,
-        ark_proof_serialized_hex,
+        ark_groth16_serialized,
+        ark_public_inputs_serialized,
+        ark_proof_serialized,
     )
 }

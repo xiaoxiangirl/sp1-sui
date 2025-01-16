@@ -5253,6 +5253,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "sp1-sui"
+version = "0.1.0"
+dependencies = [
+ "ark-bn254",
+ "ark-ec",
+ "ark-ff 0.5.0",
+ "ark-groth16",
+ "ark-serialize 0.5.0",
+ "ark-snark",
+ "clap",
+ "hex",
+ "hex-literal 0.3.4",
+ "num-bigint 0.4.6",
+ "num-traits",
+ "sp1-sdk",
+ "sp1-verifier",
+ "thiserror 2.0.11",
+]
+
+[[package]]
 name = "sp1-verifier"
 version = "3.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5357,26 +5377,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7dcb1ed7b8330c5eed5441052651dd7a12c75e2ed88f2ec024ae1fa3a5e59945"
 dependencies = [
  "zeroize",
-]
-
-[[package]]
-name = "sui-sp1"
-version = "0.1.0"
-dependencies = [
- "ark-bn254",
- "ark-ec",
- "ark-ff 0.5.0",
- "ark-groth16",
- "ark-serialize 0.5.0",
- "ark-snark",
- "clap",
- "hex",
- "hex-literal 0.3.4",
- "num-bigint 0.4.6",
- "num-traits",
- "sp1-sdk",
- "sp1-verifier",
- "thiserror 2.0.11",
 ]
 
 [[package]]

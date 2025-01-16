@@ -1,5 +1,5 @@
 [package]
-name = "sui-sp1"
+name = "sp1-sui"
 version = "0.1.0"
 edition = "2024"
 
@@ -17,7 +17,6 @@ num-traits = "0.2.19"
 sp1-sdk = "3.0.0"
 sp1-verifier = { version = "3.0.0", default-features = false }
 thiserror = "2.0.11"
-
 
 [dev-dependencies]
 hex-literal = "0.3.1"

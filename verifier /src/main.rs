@@ -1,17 +1,6 @@
-use ark_bn254::Bn254;
-use ark_groth16::{prepare_verifying_key, Groth16};
-use ark_serialize::CanonicalSerialize;
-use ark_snark::SNARK;
 use clap::Parser;
-use num_bigint::BigUint;
-use num_traits::Num;
 use sp1_sdk::SP1ProofWithPublicValues;
-
-use sui_sp1::ark_converter::{
-    load_ark_groth16_verifying_key_from_bytes, load_ark_proof_from_bytes,
-    load_ark_public_inputs_from_bytes,
-};
-use sui_sp1::{convert_sp1_gnark_to_ark, GROTH16_VK_3_0_0_BYTES};
+use sui_sp1::convert_sp1_gnark_to_ark;
 
 /// CLI arguments
 #[derive(Parser)]
@@ -45,5 +34,4 @@ fn main() {
     println!("3. Proof bytes:");
     println!("---------------------------");
     println!("{}\n", ark_proof_serialized_hex);
-
 }

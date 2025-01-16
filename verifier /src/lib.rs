@@ -8,9 +8,22 @@ pub const GROTH16_VK_3_0_0_BYTES: &[u8] = include_bytes!("../vk/v3.0.0/groth16_v
 pub const GROTH16_VK_3_0_0_RC4_BYTES: &[u8] = include_bytes!("../vk/v3.0.0rc4/groth16_vk.bin");
 pub const GROTH16_VK_2_0_0_BYTES: &[u8] = include_bytes!("../vk/v2.0.0/groth16_vk.bin");
 
+use ark_bn254::Bn254;
+use ark_groth16::{Groth16, prepare_verifying_key};
+use ark_serialize::CanonicalSerialize;
+use ark_snark::SNARK;
+use num_bigint::BigUint;
+use num_traits::Num;
+use sp1_sdk::SP1ProofWithPublicValues;
+
+use crate::ark_converter::{
+    load_ark_groth16_verifying_key_from_bytes, load_ark_proof_from_bytes,
+    load_ark_public_inputs_from_bytes,
+};
+
 pub fn convert_sp1_gnark_to_ark(
     sp1_proof_with_public_values: SP1ProofWithPublicValues,
-) -> Result<(String, String, String), Error> {
+) -> (String, String, String) {
     let proof_bytes = sp1_proof_with_public_values.bytes();
 
     let proof = sp1_proof_with_public_values
@@ -19,7 +32,7 @@ pub fn convert_sp1_gnark_to_ark(
         .expect("Failed to convert proof to Groth16 proof");
 
     // Convert vkey hash to bytes.
-    let vkey_hash = BigUint::from_str_radix(&proof.public_inputs[0], 10)?
+    let vkey_hash = BigUint::from_str_radix(&proof.public_inputs[0], 10)
         .unwrap()
         .to_bytes_be();
 
@@ -75,9 +88,9 @@ pub fn convert_sp1_gnark_to_ark(
     let ark_public_inputs_serialized_hex: String = hex::encode(ark_public_inputs_serialized);
     let ark_proof_serialized_hex: String = hex::encode(ark_proof_serialized);
 
-    Ok((
+    (
         ark_groth16_serialized_hex,
         ark_public_inputs_serialized_hex,
         ark_proof_serialized_hex,
-    ))
+    )
 }

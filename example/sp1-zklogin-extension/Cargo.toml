@@ -1,0 +1,25 @@
+[workspace]
+members = ["lib", "script", "program"]
+resolver = "2"
+
+[workspace.package]
+version = "1.1.0"
+edition = "2021"
+
+[workspace.dependencies]
+sp1-sdk = "4.0.0"
+sp1-build = "4.0.0"
+sp1-zkvm = "4.0.0"
+
+# misc
+serde = { version = "1.0.204", features = ["derive"] }
+serde_json = "1.0.132"
+tracing = "0.1.40"
+base64 = "0.13"
+anyhow = "1.0"
+
+# fork that removes time validation of expiry that causes issues with SP1 because of its C dependency
+jwt-rustcrypto = { git = "https://github.com/gnosed/jwt-rustcrypto.git" }
+
+[patch.crates-io]
+rsa = { git = "https://github.com/sp1-patches/RustCrypto-RSA/", tag = "patch-0.9.6-sp1-4.0.0" }

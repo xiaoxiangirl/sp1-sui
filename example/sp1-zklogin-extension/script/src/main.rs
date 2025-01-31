@@ -1,6 +1,6 @@
 //! A simple script to generate and verify the proof of a given program.
 
-use jwt_rustcrypto::{decode, Algorithm, ValidationOptions, VerifyingKey};
+use jwt_rustcrypto::{decode_only, Algorithm, ValidationOptions, VerifyingKey};
 use lib::split_email;
 use sp1_sdk::{include_elf, utils, ProverClient, SP1ProofWithPublicValues, SP1Stdin};
 
@@ -31,16 +31,17 @@ FQIDAQAB
     stdin.write(&rsa_public_key);
     stdin.write(&domain);
 
-    let validation_options = ValidationOptions::default()
-        .with_algorithm(Algorithm::RS256)
-        .without_expiry();
+    // let validation_options = ValidationOptions::default()
+    //     .with_algorithm(Algorithm::RS256)
+    //     .without_expiry();
 
-    let verification_key = VerifyingKey::from_rsa_pem(rsa_public_key.as_bytes())
-        .expect("Failed to create verifying key from RSA public key");
+    // let verification_key = VerifyingKey::from_rsa_pem(rsa_public_key.as_bytes())
+    //     .expect("Failed to create verifying key from RSA public key");
 
-    let decoded = decode(&token, &verification_key, &validation_options)
-        .expect("Failed to decode or validate JWT with RSA key");
+    let decoded = decode_only(&token)
+        .expect("Failed to decode JWT");
 
+  
     log::debug!("Decoded Header: {:?}", decoded.header);
     log::debug!("Decoded Payload: {:?}", decoded.payload);
 

@@ -1,7 +1,6 @@
 //! A simple script to generate and verify the proof of a given program.
 
-use jwt_rustcrypto::{decode_only, Algorithm, ValidationOptions, VerifyingKey};
-use lib::split_email;
+use lib::{split_email, split_jwt};
 use sp1_sdk::{include_elf, utils, ProverClient, SP1ProofWithPublicValues, SP1Stdin};
 
 const JSON_ELF: &[u8] = include_elf!("json-program");
@@ -31,21 +30,12 @@ FQIDAQAB
     stdin.write(&rsa_public_key);
     stdin.write(&domain);
 
-    // let validation_options = ValidationOptions::default()
-    //     .with_algorithm(Algorithm::RS256)
-    //     .without_expiry();
-
-    // let verification_key = VerifyingKey::from_rsa_pem(rsa_public_key.as_bytes())
-    //     .expect("Failed to create verifying key from RSA public key");
-
-    let decoded = decode_only(&token)
+    let (payload, signature) = split_jwt(&token)
         .expect("Failed to decode JWT");
+    
+    log::debug!("Decoded Payload: {:?}", payload);
 
-  
-    log::debug!("Decoded Header: {:?}", decoded.header);
-    log::debug!("Decoded Payload: {:?}", decoded.payload);
-
-    let email_parts = split_email(decoded.payload.get("email").unwrap().to_string()).unwrap();
+    let email_parts = split_email(payload.get("email").unwrap().to_string()).unwrap();
 
     log::debug!("Email parts:");
     log::debug!("Username: {}", email_parts.username);

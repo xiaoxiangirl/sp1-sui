@@ -909,20 +909,6 @@ name = "bytemuck"
 version = "1.21.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ef657dfab802224e671f5818e9a4935f9b1957ed18e58292690cc39e7a4092a3"
-dependencies = [
- "bytemuck_derive",
-]
-
-[[package]]
-name = "bytemuck_derive"
-version = "1.8.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3fa76293b4f7bb636ab88fd78228235b5248b4d05cc589aed610f954af5d7c7a"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 2.0.96",
-]
 
 [[package]]
 name = "byteorder"
@@ -2414,6 +2400,7 @@ name = "json-program"
 version = "1.1.0"
 dependencies = [
  "json-lib",
+ "log",
  "rsa",
  "sha2",
  "sp1-zkvm",
@@ -3801,13 +3788,11 @@ dependencies = [
 
 [[package]]
 name = "rsa"
-version = "0.9.6"
-source = "git+https://github.com/sp1-patches/RustCrypto-RSA/?tag=patch-0.9.6-sp1-4.0.0#27cc8e7b1dfb43a2bc7ecc3726c13f049a4ec096"
+version = "0.9.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "47c75d7c5c6b673e58bf54d8544a9f432e3a925b0e80f7cd3602ab5c50c55519"
 dependencies = [
- "bytemuck",
- "cfg-if",
  "const-oid",
- "crypto-bigint",
  "digest 0.10.7",
  "num-bigint-dig",
  "num-integer",
@@ -3816,7 +3801,6 @@ dependencies = [
  "pkcs8",
  "rand_core",
  "signature",
- "sp1-lib",
  "spki",
  "subtle",
  "zeroize",
@@ -4198,7 +4182,8 @@ dependencies = [
 [[package]]
 name = "sha2"
 version = "0.10.8"
-source = "git+https://github.com/sp1-patches/RustCrypto-hashes?tag=patch-sha2-0.10.8-sp1-4.0.0#1f224388fdede7cef649bce0d63876d1a9e3f515"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "793db75ad2bcafc3ffa7c68b215fee268f537982cd901d132f89c6343f3a3dc8"
 dependencies = [
  "cfg-if",
  "cpufeatures",

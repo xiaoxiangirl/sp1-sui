@@ -30,7 +30,7 @@ FQIDAQAB
     stdin.write(&rsa_public_key);
     stdin.write(&domain);
 
-    let (payload, signature) = split_jwt(&token)
+    let (_, payload, _) = split_jwt(&token)
         .expect("Failed to decode JWT");
     
     log::debug!("Decoded Payload: {:?}", payload);

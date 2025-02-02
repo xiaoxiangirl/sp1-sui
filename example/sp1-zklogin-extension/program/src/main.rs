@@ -12,7 +12,7 @@ pub fn main() {
 
     sp1_zkvm::io::commit(&domain);
 
-    let (payload, signature) = split_jwt(&token)
+    let (header, payload, signature) = split_jwt(&token)
         .expect("Failed to decode JWT");
     
     let pk_der = pem_to_der(&rsa_public_key);
@@ -27,8 +27,12 @@ pub fn main() {
     hasher.update(signing_input);
     let hashed_msg = hasher.finalize();
 
-    let _verification = public_key.verify(Pkcs1v15Sign::new::<Sha256>(), &hashed_msg, &signature);
-    //sp1_zkvm::io::commit(&verification);
+    let verification_result = match public_key.verify(Pkcs1v15Sign::new::<Sha256>(), &hashed_msg, &signature) {
+        Ok(_) => true,
+        Err(_) => false,
+    };
+    log::debug!("verification result {:?}", verification_result);
+    sp1_zkvm::io::commit(&verification_result);
 
     let email_parts = split_email(payload.get("email").unwrap().to_string()).unwrap();
     let verified = email_parts.domain == domain;

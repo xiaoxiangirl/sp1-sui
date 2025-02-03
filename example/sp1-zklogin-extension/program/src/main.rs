@@ -1,11 +1,12 @@
 #![no_main]
 sp1_zkvm::entrypoint!(main);
 
-use lib::{split_email, split_jwt, pem_to_der};
+use lib::{split_email, split_jwt, pem_to_der, Blake2b256};
 use rsa::{pkcs8::DecodePublicKey, Pkcs1v15Sign, RsaPublicKey};
-use sha2::{Digest, Sha256};
+use sha2_v0_10_8::{Digest, Sha256};
 
 pub fn main() {
+    let result = Blake2b256("my_input");
     let token = sp1_zkvm::io::read::<String>();
     let rsa_public_key = sp1_zkvm::io::read::<String>();
     let domain = sp1_zkvm::io::read::<String>();
@@ -31,7 +32,6 @@ pub fn main() {
         Ok(_) => true,
         Err(_) => false,
     };
-    log::debug!("verification result {:?}", verification_result);
     sp1_zkvm::io::commit(&verification_result);
 
     let email_parts = split_email(payload.get("email").unwrap().to_string()).unwrap();

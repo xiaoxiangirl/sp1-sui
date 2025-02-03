@@ -841,8 +841,7 @@ dependencies = [
 [[package]]
 name = "blake2"
 version = "0.10.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "46502ad458c9a52b69d4d4d32775c788b7a1b85e8bc9d482d92250fc0e3f8efe"
+source = "git+https://github.com/sp1-patches/RustCrypto-hashes?tag=blake2-v0.10.6#1f727ce37ff40fa0cce84eb8543a45bdd3ca4a4e"
 dependencies = [
  "digest 0.10.7",
 ]
@@ -909,6 +908,20 @@ name = "bytemuck"
 version = "1.21.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ef657dfab802224e671f5818e9a4935f9b1957ed18e58292690cc39e7a4092a3"
+dependencies = [
+ "bytemuck_derive",
+]
+
+[[package]]
+name = "bytemuck_derive"
+version = "1.8.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3fa76293b4f7bb636ab88fd78228235b5248b4d05cc589aed610f954af5d7c7a"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.96",
+]
 
 [[package]]
 name = "byteorder"
@@ -1959,6 +1972,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "hex-literal"
+version = "0.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6fe2267d4ed49bc07b63801559be28c718ea06c4738b7a03c94df7386d2cde46"
+
+[[package]]
 name = "hmac"
 version = "0.12.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2391,6 +2410,8 @@ version = "1.1.0"
 dependencies = [
  "anyhow",
  "base64",
+ "blake2",
+ "hex-literal",
  "serde",
  "serde_json",
 ]
@@ -2720,6 +2741,7 @@ dependencies = [
  "num-iter",
  "num-traits",
  "rand",
+ "serde",
  "smallvec",
  "zeroize",
 ]
@@ -3788,11 +3810,13 @@ dependencies = [
 
 [[package]]
 name = "rsa"
-version = "0.9.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "47c75d7c5c6b673e58bf54d8544a9f432e3a925b0e80f7cd3602ab5c50c55519"
+version = "0.9.6"
+source = "git+https://github.com/sp1-patches/RustCrypto-RSA/?tag=patch-0.9.6-sp1-4.0.0#27cc8e7b1dfb43a2bc7ecc3726c13f049a4ec096"
 dependencies = [
+ "bytemuck",
+ "cfg-if",
  "const-oid",
+ "crypto-bigint",
  "digest 0.10.7",
  "num-bigint-dig",
  "num-integer",
@@ -3800,7 +3824,10 @@ dependencies = [
  "pkcs1",
  "pkcs8",
  "rand_core",
+ "serde",
+ "sha2",
  "signature",
+ "sp1-lib",
  "spki",
  "subtle",
  "zeroize",
@@ -4182,8 +4209,7 @@ dependencies = [
 [[package]]
 name = "sha2"
 version = "0.10.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "793db75ad2bcafc3ffa7c68b215fee268f537982cd901d132f89c6343f3a3dc8"
+source = "git+https://github.com/sp1-patches/RustCrypto-hashes?tag=patch-sha2-0.10.8-sp1-4.0.0#1f224388fdede7cef649bce0d63876d1a9e3f515"
 dependencies = [
  "cfg-if",
  "cpufeatures",

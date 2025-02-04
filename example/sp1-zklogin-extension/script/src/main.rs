@@ -1,5 +1,4 @@
 //! A simple script to generate and verify the proof of a given program.
-
 use lib::{split_email, split_jwt};
 use sp1_sdk::{include_elf, utils, ProverClient, SP1ProofWithPublicValues, SP1Stdin};
 

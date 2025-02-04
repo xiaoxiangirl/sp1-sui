@@ -841,7 +841,8 @@ dependencies = [
 [[package]]
 name = "blake2"
 version = "0.10.6"
-source = "git+https://github.com/sp1-patches/RustCrypto-hashes?tag=blake2-v0.10.6#1f727ce37ff40fa0cce84eb8543a45bdd3ca4a4e"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "46502ad458c9a52b69d4d4d32775c788b7a1b85e8bc9d482d92250fc0e3f8efe"
 dependencies = [
  "digest 0.10.7",
 ]
@@ -1972,12 +1973,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "hex-literal"
-version = "0.4.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6fe2267d4ed49bc07b63801559be28c718ea06c4738b7a03c94df7386d2cde46"
-
-[[package]]
 name = "hmac"
 version = "0.12.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2410,8 +2405,6 @@ version = "1.1.0"
 dependencies = [
  "anyhow",
  "base64",
- "blake2",
- "hex-literal",
  "serde",
  "serde_json",
 ]

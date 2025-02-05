@@ -1,18 +1,18 @@
 //! A simple script to generate and verify the proof of a given program.
-use lib::{split_email, split_jwt};
 use sp1_sdk::{include_elf, utils, ProverClient, SP1ProofWithPublicValues, SP1Stdin};
-
 const JSON_ELF: &[u8] = include_elf!("json-program");
 
 fn main() {
-    // setup tracer for logging.
+    // Set up logging for debugging and tracing.
     utils::setup_logger();
 
-    // Generate proof.
+    // Initialize the proof input.
     let mut stdin = SP1Stdin::new();
 
+    // Example JWT token (normally this would come from a real source).
     let token: &str = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiYXVkIjoiNTc1NTE5MjA0MjM3LW1zb3A5ZXA0NXUydW85OGhhcHFtbmd2OGQ4NHFkYzhrLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiaXNzIjoiaHR0cHM6Ly9hY2NvdW50cy5nb29nbGUuY29tIiwic2FsdCI6IjY1ODg3NDE0NjkwNTA1MDI0MjE1NTAxNDAxMDUzNDUwNTA4NTkifQ.CTd77H763dYAJqsktBOBQeLK0YHYq7VQUH8E0S8vCQt6amEkUxCjb8oCaoJG_iAiWTzWan0v8treLtiOCaFtHav8vfMbE-x_hVB74LYrBa192k_oWXvlmMoyfVaRuFj9iVtKakY8PXVfMQWq9Znlus9Hg5I0CRhJpAkUTmcZTUs1TSjR_td2pPRcag46QXicafT6AvGCkLDzeMKbF7o6o5zhIUa8hd7sBrW-Ru1Uo3BdIu2KCmaE-o9xnanCB_-CB-S_reUUh692UhM_urnr3XA_s76a2jihYMMT_sbb6j25sadGN1dLbOnh05fWg-ikWYTOn0xwtqPSflWkKeVt6g";
 
+    // RSA public key (used for verifying the JWT signature).
     let rsa_public_key = r#"-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr2xKE7fuT/VV2Lk7gfCk
 A4xOTcFXWboTJ6ZGx1zWCP8d1pY5mYPx/dTUgDtUjaYGIRJy6G8xYLZvj22aY3l/
@@ -23,41 +23,40 @@ qXveBZaVAUe0uKlvd7yZE5ZAfyKHLNpT85ay/yfA6O4B9hwslM2El5ge3FKL53jV
 FQIDAQAB
 -----END PUBLIC KEY-----"#;
 
+    // Domain we want to verify in the email.
     let domain: &str = "gmail.com";
 
+    // Provide inputs to the proof system.
     stdin.write(&token);
     stdin.write(&rsa_public_key);
     stdin.write(&domain);
 
-    let (_, payload, _) = split_jwt(&token)
-        .expect("Failed to decode JWT");
-    
-    log::debug!("Decoded Payload: {:?}", payload);
-
-    let email_parts = split_email(payload.get("email").unwrap().to_string()).unwrap();
-
-    log::debug!("Email parts:");
-    log::debug!("Username: {}", email_parts.username);
-    log::debug!("Domain: {}", email_parts.domain);
-
+    // Initialize the prover.
     let client = ProverClient::from_env();
+
+    // Set up the proving and verification keys.
     let (pk, vk) = client.setup(JSON_ELF);
+
+    // Generate the proof.
     let proof = client.prove(&pk, &stdin).run().expect("proving failed");
 
-    // Verify proof.
+    // Verify the proof.
     client.verify(&proof, &vk).expect("verification failed");
 
-    // Test a round trip of proof serialization and deserialization.
+    // Save the proof to a file.
     proof
         .save("proof-with-io.bin")
         .expect("saving proof failed");
+
+    // Load the proof from the file to test serialization/deserialization.
     let deserialized_proof =
         SP1ProofWithPublicValues::load("proof-with-io.bin").expect("loading proof failed");
 
-    // Verify the deserialized proof.
+    // Verify the deserialized proof to ensure consistency.
     client
         .verify(&deserialized_proof, &vk)
         .expect("verification failed");
 
-    println!("successfully generated and verified proof for the program!")
+    // Print success message.
+    println!("Successfully generated and verified proof for the program!");
 }

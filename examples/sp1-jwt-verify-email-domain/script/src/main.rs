@@ -45,12 +45,13 @@ FQIDAQAB
 
     // Save the proof to a file.
     proof
-        .save("proof-with-io.bin")
+        .save("../../../proofs/proof_jwt_verify_email_domain.bin")
         .expect("saving proof failed");
 
     // Load the proof from the file to test serialization/deserialization.
     let deserialized_proof =
-        SP1ProofWithPublicValues::load("proof-with-io.bin").expect("loading proof failed");
+        SP1ProofWithPublicValues::load("../../../proofs/proof_jwt_verify_email_domain.bin")
+            .expect("loading proof failed");
 
     // Verify the deserialized proof to ensure consistency.
     client

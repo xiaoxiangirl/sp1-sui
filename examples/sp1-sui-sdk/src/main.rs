@@ -43,7 +43,7 @@ async fn main() -> Result<(), anyhow::Error> {
     ptb.input(serialize_input(&public_inputs))?;  // Input 1: Public inputs
     ptb.input(serialize_input(&proof_points))?;   // Input 2: Proof points
 
-    // Package and function defined in `example/move/groth16_verifier`
+    // Package and function defined in `examples/move/groth16-verifier`
     let package = ObjectID::from_hex_literal(&PKG_ID).map_err(|e| anyhow!(e))?;
     let module = Identifier::new("groth16_verifier").map_err(|e| anyhow!(e))?;
 

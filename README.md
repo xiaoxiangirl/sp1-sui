@@ -29,7 +29,7 @@ We also provide three examples of how to use the SP1 Groth16 verifier:
 
 To be able to use SP1 Groth16 proofs on Sui, you need to:
 
-1. Deploy the SP1 Groth16 verifier smart contract to Sui with your own logic. See the [SP1 Groth16 verifier smart contract](examples/move/groth16_verifier) for a vanilla example.
+1. Deploy the SP1 Groth16 verifier smart contract to Sui with your own logic. See the [SP1 Groth16 verifier smart contract](examples/move/groth16-verifier) for a vanilla example.
 2. Generate a Groth16 proof using the SP1 zkVM. See the [SP1 zkVM](https://github.com/succinctlabs/sp1) repository.
 3. Add the `sp1-sdk` and `sp1-sui` crates to your `Cargo.toml` in your Sui Rust SDK project.
 

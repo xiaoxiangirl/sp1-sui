@@ -4,6 +4,7 @@ mod test;
 pub mod ark_converter;
 
 /// Groth16 verification keys for different SP1 versions.
+pub const GROTH16_VK_4_0_0_RC3_BYTES: &[u8] = include_bytes!("../vk/v4.0.0-rc.3/groth16_vk.bin");
 pub const GROTH16_VK_3_0_0_BYTES: &[u8] = include_bytes!("../vk/v3.0.0/groth16_vk.bin");
 pub const GROTH16_VK_3_0_0_RC4_BYTES: &[u8] = include_bytes!("../vk/v3.0.0rc4/groth16_vk.bin");
 pub const GROTH16_VK_2_0_0_BYTES: &[u8] = include_bytes!("../vk/v2.0.0/groth16_vk.bin");
@@ -69,7 +70,7 @@ pub fn convert_sp1_gnark_to_ark(
     });
 
     // Ark Groth16
-    let ark_groth16_vk = load_ark_groth16_verifying_key_from_bytes(GROTH16_VK_3_0_0_BYTES).unwrap();
+    let ark_groth16_vk = load_ark_groth16_verifying_key_from_bytes(GROTH16_VK_4_0_0_RC3_BYTES).unwrap();
     let ark_pvk = prepare_verifying_key(&ark_groth16_vk);
 
     // Verify Ark proof
